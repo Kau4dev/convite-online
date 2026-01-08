@@ -1,0 +1,491 @@
+:root {
+  --bg-vintage: #fdfbf7;
+  --green-brazil: #009c3b;
+  --yellow-brazil: #ffdf00;
+  --blue-brazil: #002776;
+  --pink-seal: #e91e63; /* Rosa elegante para o selo */
+  --spotify-green: #1db954;
+  --envelope-color: #f0e6d2;
+  --font-head: "Abril Fatface", cursive;
+  --font-seal: "Great Vibes", cursive; /* Fonte manuscrita */
+  --font-body: "Open Sans", sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-vintage);
+  font-family: var(--font-body);
+  color: #333;
+  overflow-x: hidden;
+}
+
+/* --- NOVO ENVELOPE PREMIUM --- */
+#intro-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* A imagem de fundo é definida no HTML */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  transition: opacity 0.8s ease-out;
+}
+#intro-overlay::before {
+  /* Camada escura sobre a foto de fundo para destacar o envelope */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.envelope-wrapper {
+  position: relative;
+  width: 320px;
+  height: 220px;
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.envelope-base {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--envelope-color);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  perspective: 1000px;
+  overflow: hidden; /* Importante para o cartão sair de dentro */
+}
+
+/* As partes do envelope usando bordas CSS */
+.flap {
+  position: absolute;
+  border-style: solid;
+}
+.flap.bottom {
+  bottom: 0;
+  border-width: 0 160px 110px 160px;
+  border-color: transparent transparent #e6dac6 transparent;
+  z-index: 3;
+}
+.flap.left {
+  left: 0;
+  border-width: 110px 0 110px 160px;
+  border-color: transparent transparent transparent #eaddcf;
+  z-index: 3;
+}
+.flap.right {
+  right: 0;
+  border-width: 110px 160px 110px 0;
+  border-color: transparent #eaddcf transparent transparent;
+  z-index: 3;
+}
+
+/* A aba superior que abre */
+.flap.top {
+  top: 0;
+  border-width: 115px 160px 0 160px;
+  border-color: var(--envelope-color) transparent transparent transparent;
+  z-index: 5;
+  transform-origin: top;
+  transition: transform 0.6s ease-in-out, z-index 0.1s linear 0.3s;
+}
+
+/* O Selo Rosa e Manuscrito */
+.seal {
+  position: absolute;
+  top: 85px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background: var(--pink-seal);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: var(--font-seal);
+  font-size: 42px;
+  font-weight: normal;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  z-index: 6;
+  transition: opacity 0.4s ease;
+}
+
+/* O Cartão de dentro */
+.letter-inside {
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  right: 10px;
+  height: 90%;
+  background: #fff
+    url("https://www.transparenttextures.com/patterns/cream-paper.png");
+  z-index: 1; /* Começa atrás das abas */
+  transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Efeito de pulo */
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.letter-content h3 {
+  font-family: var(--font-seal);
+  font-size: 2.5rem;
+  margin: 0;
+  color: var(--pink-seal);
+}
+.letter-content p {
+  font-family: var(--font-head);
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.click-hint {
+  color: white;
+  margin-top: 20px;
+  font-weight: bold;
+  animation: pulse 1.5s infinite;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* --- ESTADOS DA ANIMAÇÃO --- */
+/* Quando a classe .is-open é adicionada via JS */
+.envelope-wrapper.is-open .flap.top {
+  transform: rotateX(180deg);
+  z-index: 2; /* Vai para trás */
+}
+.envelope-wrapper.is-open .seal {
+  opacity: 0; /* Selo some */
+}
+.envelope-wrapper.is-open .letter-inside {
+  transform: translateY(-130px);
+  z-index: 4; /* Cartão sobe e fica na frente das abas de baixo */
+  transition-delay: 0.5s; /* Espera a aba abrir */
+}
+.intro-fade-out {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* --- CONTEÚDO PRINCIPAL (Estilos anteriores ajustados) --- */
+.hidden {
+  display: none;
+}
+#main-content {
+  animation: slideUpFade 1s ease;
+}
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero {
+  height: 70vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 2rem;
+}
+.hero .overlay {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 1.5rem 3rem;
+  border-radius: 15px;
+  border: 3px dashed var(--green-brazil);
+  text-align: center;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+h1 {
+  font-family: var(--font-head);
+  font-size: 3.5rem;
+  color: var(--green-brazil);
+  margin: 0;
+  line-height: 1;
+}
+h2 {
+  font-family: var(--font-head);
+  font-size: 2rem;
+  color: var(--yellow-brazil);
+  text-shadow: 1px 1px 0 #333;
+  margin: 5px 0 10px 0;
+}
+.badge {
+  background: var(--blue-brazil);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+.details {
+  padding: 2rem 1rem;
+  text-align: center;
+  background: url("https://www.transparenttextures.com/patterns/cardboard.png");
+}
+.ticket {
+  border: 3px dashed var(--blue-brazil);
+  padding: 25px;
+  background: #fff;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+  transform: rotate(-2deg);
+}
+.date-box {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  align-items: baseline;
+  font-family: var(--font-head);
+  color: var(--green-brazil);
+  border-bottom: 2px dotted #ccc;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+.date-box .day {
+  font-size: 3rem;
+  line-height: 1;
+}
+.date-box .month {
+  font-size: 2rem;
+}
+.date-box .time {
+  font-size: 2rem;
+  color: var(--blue-brazil);
+}
+.invite-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  font-weight: 600;
+}
+
+.requirements {
+  padding: 3rem 2rem;
+  position: relative;
+  background-color: #fff; /* base do papel */
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  /* Camadas: textura, linhas horizontais e base branca */
+  background-image: url("https://www.transparenttextures.com/patterns/white-paper.png"),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.06) 0px,
+      rgba(0, 0, 0, 0.06) 1px,
+      transparent 1px,
+      transparent 40px
+    ),
+    linear-gradient(90deg, transparent 90px, transparent 100%);
+  background-size: auto, 100% 40px, auto;
+  background-repeat: repeat, repeat, no-repeat;
+}
+.requirements::before {
+  /* faixa colorida no topo (mantendo a decoração anterior) */
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(
+    to right,
+    var(--green-brazil) 33%,
+    var(--yellow-brazil) 33%,
+    var(--yellow-brazil) 66%,
+    var(--blue-brazil) 66%
+  );
+}
+.requirements::after {
+  /* linha vertical de margem estilo caderno */
+  content: "";
+  position: absolute;
+  left: 78px;
+  top: 24px;
+  bottom: 24px;
+  width: 2px;
+  background: rgba(255, 0, 0, 0.65);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+  pointer-events: none;
+}
+.requirements h3 {
+  font-family: var(--font-head);
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-decoration: underline;
+}
+.requirements ul {
+  list-style: none;
+  padding: 0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.requirements li {
+  font-size: 1.15rem;
+  margin: 0;
+  padding: 8px 12px;
+  line-height: 40px; /* faz o texto alinhar com as linhas do papel */
+  display: block;
+  align-items: center;
+  background: transparent;
+}
+
+/* Espaço à esquerda para a margem e furos */
+.requirements ul {
+  padding-left: 100px;
+}
+
+/* Desenho dos furos com pseudo-elemento via background (repetição vertical) */
+.requirements {
+  background-position: left top, left top, left top;
+}
+
+.photo-break {
+  height: 350px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* --- NOVO BOTÃO SPOTIFY CIRCULAR --- */
+.spotify-section {
+  padding: 3rem 1rem;
+  background: #111;
+  color: white;
+  text-align: center;
+}
+.spotify-section h3 {
+  font-family: var(--font-seal);
+  font-size: 3rem;
+  margin: 0 0 10px 0;
+  color: var(--spotify-green);
+  font-weight: normal;
+}
+.spotify-btn-circle {
+  display: inline-flex;
+  width: 120px;
+  height: 120px;
+  background: var(--spotify-green);
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 70px;
+  text-decoration: none;
+  box-shadow: 0 0 20px rgba(29, 185, 84, 0.5);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin: 20px auto;
+}
+.spotify-btn-circle:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 30px rgba(29, 185, 84, 0.8);
+}
+.spotify-section small {
+  opacity: 0.7;
+}
+
+/* Botões Finais */
+.actions {
+  padding: 4rem 1rem;
+  text-align: center;
+  background: var(--bg-vintage);
+}
+/* Fazer a folhagem ocupar exatamente a largura da viewport sem quebrar layout */
+.ivy-decor {
+  display: block;
+  width: 100vw; /* ocupa toda a largura da janela */
+  max-width: 100vw;
+  height: auto;
+  margin-left: calc(50% - 50vw); /* centraliza full-bleed dentro do container */
+  margin-bottom: -28px; /* aproxima do título (ajuste fino) */
+  pointer-events: none;
+  z-index: 1;
+  object-fit: cover;
+}
+@media (max-width: 800px) {
+  .ivy-decor {
+    margin-bottom: -18px;
+  }
+}
+@media (max-width: 420px) {
+  .ivy-decor {
+    display: none;
+  }
+}
+.buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 30px;
+}
+.btn {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: all 0.3s;
+  border: 4px solid white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+.btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+.btn-local {
+  background-color: #e9bc1e;
+}
+.btn-confirm {
+  background-color: var(--green-brazil);
+}
+.btn i {
+  font-size: 2.2rem;
+  margin-bottom: 5px;
+}
+
+.actions.padding {
+  padding-top: 0;
+}
+
+footer {
+  text-align: center;
+  padding: 0.5rem;
+  background: #eee;
+  font-size: 0.9rem;
+}
