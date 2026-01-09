@@ -343,6 +343,20 @@ h2 {
   font-size: 2rem;
   margin-bottom: 2rem;
   text-decoration: underline;
+  max-width: calc(100% - 156px); /* 78px de margem esquerda + 78px direita */
+  margin: 0 auto 2rem;
+  /* Preferir quebra por palavra e habilitar hífenização automática */
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: auto;
+}
+
+/* Remover sublinhado apenas do emoji no título */
+.requirements h3 .no-underline {
+  display: inline-block;
+  text-decoration: none;
+  vertical-align: middle;
+  margin-right: 0.35rem;
 }
 .requirements ul {
   list-style: none;
@@ -362,7 +376,7 @@ h2 {
 
 /* Espaço à esquerda para a margem e furos */
 .requirements ul {
-  padding-left: 100px;
+  padding-left: 110px;
 }
 
 /* Desenho dos furos com pseudo-elemento via background (repetição vertical) */
@@ -490,10 +504,10 @@ h2 {
 .actions.padding {
   padding-top: 0;
 }
+/* Preferir quebra entre palavras; permitir hífenização se necessário */
 
-footer {
+/* Footer: garantir parágrafo centralizado */
+footer p {
+  margin: 0;
   text-align: center;
-  padding: 0.5rem;
-  background: #eee;
-  font-size: 0.9rem;
 }
