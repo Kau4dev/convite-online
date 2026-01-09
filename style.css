@@ -329,7 +329,7 @@ h2 {
   /* linha vertical de margem estilo caderno */
   content: "";
   position: absolute;
-  left: 78px;
+  left: 38px;
   top: 24px;
   bottom: 24px;
   width: 2px;
@@ -343,11 +343,11 @@ h2 {
   font-size: 2rem;
   margin-bottom: 2rem;
   text-decoration: underline;
-  max-width: calc(100% - 156px); /* 78px de margem esquerda + 78px direita */
+  max-width: calc(100% - 76px); /* 38px de margem esquerda + 38px direita */
   margin: 0 auto 2rem;
   /* Preferir quebra por palavra e habilitar hífenização automática */
   overflow-wrap: normal;
-  word-break: normal;
+  word-break: auto-phrase;
   hyphens: auto;
 }
 
@@ -376,7 +376,7 @@ h2 {
 
 /* Espaço à esquerda para a margem e furos */
 .requirements ul {
-  padding-left: 110px;
+  padding-left: 70px;
 }
 
 /* Desenho dos furos com pseudo-elemento via background (repetição vertical) */
