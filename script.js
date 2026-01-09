@@ -1,3 +1,19 @@
+function openWhatsApp(phone, message) {
+  const text = encodeURIComponent(message || "");
+  const appUrl = `whatsapp://send?phone=${phone}&text=${text}`;
+  const webUrl = `https://wa.me/${phone}?text=${text}`;
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if (isMobile) {
+    window.location.href = appUrl;
+    setTimeout(() => {
+      window.location.href = webUrl;
+    }, 900);
+  } else {
+    window.open(webUrl, "_blank", "noopener");
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const envelopeTrigger = document.getElementById("envelope-trigger");
   const introOverlay = document.getElementById("intro-overlay");

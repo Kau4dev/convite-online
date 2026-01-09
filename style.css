@@ -371,14 +371,13 @@ h2 {
 }
 
 .photo-break {
-  height: 350px;
+  height: 22rem;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-/* --- NOVO BOTÃO SPOTIFY CIRCULAR --- */
 .spotify-section {
   padding: 3rem 1rem;
   background: #111;
@@ -422,25 +421,34 @@ h2 {
   background: var(--bg-vintage);
 }
 /* Fazer a folhagem ocupar exatamente a largura da viewport sem quebrar layout */
-.ivy-decor {
-  display: block;
-  width: 100vw; /* ocupa toda a largura da janela */
-  max-width: 100vw;
-  height: auto;
-  margin-left: calc(50% - 50vw); /* centraliza full-bleed dentro do container */
-  margin-bottom: -28px; /* aproxima do título (ajuste fino) */
-  pointer-events: none;
-  z-index: 1;
-  object-fit: cover;
+.actions {
+  overflow: visible !important;
 }
+.ivy-strip {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  height: 8rem; /* padrão desktop */
+  max-height: 10rem;
+  background-image: url("assets/folhas.png");
+  background-repeat: repeat-x;
+  background-position: top center;
+  background-size: auto 100%; /* escala a imagem para altura do container */
+  pointer-events: none;
+  overflow: hidden;
+}
+
 @media (max-width: 800px) {
-  .ivy-decor {
-    margin-bottom: -18px;
+  .ivy-strip {
+    height: 6.5rem;
+    background-size: auto 100%;
   }
 }
+
 @media (max-width: 420px) {
-  .ivy-decor {
-    display: none;
+  .ivy-strip {
+    height: 4.5rem; /* menor para celulares */
+    background-size: auto 100%;
+    background-position: top center;
   }
 }
 .buttons-container {
