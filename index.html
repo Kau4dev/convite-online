@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
@@ -15,7 +15,10 @@
     />
   </head>
   <body>
-    <div id="intro-overlay" style="background-image: url('assets/fundo.jpeg')">
+    <div
+      id="intro-overlay"
+      style="background-image: url(&quot;assets/fundo.jpeg&quot;)"
+    >
       <div class="envelope-wrapper" id="envelope-trigger">
         <div class="envelope-base">
           <div class="letter-inside">
@@ -35,7 +38,10 @@
     </div>
 
     <main id="main-content" class="hidden">
-      <section class="hero" style="background-image: url('assets/rindo.jpeg')">
+      <section
+        class="hero"
+        style="background-image: url(&quot;assets/rindo.jpeg&quot;)"
+      >
         <div class="overlay">
           <h1>Bruna</h1>
           <h2>21 Anos</h2>
@@ -47,8 +53,8 @@
         <div class="ticket">
           <div class="date-box">
             <span class="day">7</span>
-            <span class="month">JANEIRO</span>
-            <span class="time">10h</span>
+            <span class="month">FEVEREIRO</span>
+            <span class="time">13h</span>
           </div>
           <p class="invite-text">
             Vem curtir comigo essa festa no nosso jeitinho brasileiro! 🌺🍻
@@ -74,14 +80,14 @@
 
       <section
         class="photo-break"
-        style="background-image: url('assets/bebendo.jpeg')"
+        style="background-image: url(&quot;assets/bebendo.jpeg&quot;)"
       ></section>
 
       <section class="spotify-section">
         <h3>Espaço DJ</h3>
         <p>Adicione as músicas que você quer ouvir:</p>
         <a
-          href="LINK_DA_PLAYLIST_SPOTIFY"
+          href="https://open.spotify.com/playlist/7oK91DVs8L6u189Vv5Z1Zc?si=fMtWUjVIQK2s5tbvJEM-ow&pt=07e548c8d33b602c7d047dd7cd115b8f&pi=8t2ylzOMTlK3s"
           target="_blank"
           class="spotify-btn-circle"
         >
@@ -105,7 +111,13 @@
 
           <a
             href="#"
-            onclick="openWhatsApp('5583981250737','Pode contar comigo! Presença confirmada. ✅'); return false;"
+            onclick="
+              openWhatsApp(
+                '5583981250737',
+                'Pode contar comigo! Presença confirmada. ✅',
+              );
+              return false;
+            "
             class="btn btn-confirm"
           >
             <i class="fas fa-check"></i>
